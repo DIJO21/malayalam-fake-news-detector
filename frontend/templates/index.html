@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malayalam Fake News & Fact Verification AI</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Background glow blobs -->
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-11">
+                <!-- Dashboard Container -->
+                <div class="dashboard-container">
+                    
+                    <!-- Header -->
+                    <div class="dashboard-header text-center mb-5 fade-in">
+                        <h1 class="display-5 fw-extrabold mb-2">Malayalam Fact Verification AI</h1>
+                        <p class="text-secondary">Advanced Hybrid Transformer Classifiers + Live Web Corroboration</p>
+                    </div>
+
+                    <!-- Status Alert Banner -->
+                    <div id="status-banner" class="alert-custom d-none mb-4 fade-in" role="alert">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+                            <span id="status-text">Connecting to intelligence engine...</span>
+                        </div>
+                    </div>
+
+                    <!-- Split Screen Dashboard -->
+                    <div class="row g-5">
+                        
+                        <!-- Left Panel: Input Section -->
+                        <div class="col-lg-6 fade-in">
+                            <h4 class="fw-bold mb-4 text-white">Input Analysis</h4>
+                            
+                            <form id="prediction-form">
+                                <div class="mb-4">
+                                    <label for="newsText" class="form-label">News Headline / Article Text</label>
+                                    <textarea class="form-control custom-textarea" id="newsText" rows="6" placeholder="പരിശോധിക്കേണ്ട വാർത്ത ഇവിടെ നൽകുക അല്ലെങ്കിൽ താഴെയുള്ള ഉദാഹരണങ്ങളിൽ ഒന്ന് ക്ലിക്ക് ചെയ്യുക..." required></textarea>
+                                    <div class="d-flex justify-content-between mt-2 px-1">
+                                        <small class="text-muted" id="char-count">0 characters</small>
+                                        <small class="text-muted">Malayalam Input</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid mb-4">
+                                    <button type="submit" class="btn btn-gradient btn-lg py-3 shadow-sm d-flex align-items-center justify-content-center gap-2" id="analyze-btn">
+                                        <span id="btn-text">Verify Authenticity</span>
+                                        <span id="btn-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Quick Examples -->
+                            <div class="mt-4">
+                                <label class="form-label text-secondary mb-3">Quick Verification Examples</label>
+                                <div id="examples-container">
+                                    <button class="example-badge w-100" data-label="real" data-text="കേരളത്തിൽ അടുത്ത 3 ദിവസങ്ങളിൽ കനത്ത മഴയ്ക്ക് സാധ്യതയുണ്ടെന്ന് കാലാവസ്ഥാ നിരീക്ഷണ കേന്ദ്രം മുന്നറിയിപ്പ് നൽകി.">
+                                        <i class="bi bi-cloud-rain me-2 text-info"></i> Kerala rain forecast warning (Real)
+                                    </button>
+                                    <button class="example-badge w-100" data-label="fake" data-text="കെഎസ്ആർടിസി ബസുകളിൽ നാളെ മുതൽ യാത്രക്കാർക്ക് സൗജന്യ യാത്ര അനുവദിക്കാൻ ഗതാഗത വകുപ്പ് തീരുമാനിച്ചു.">
+                                        <i class="bi bi-bus-front-fill me-2 text-warning"></i> Free KSRTC bus travel claim (Fake)
+                                    </button>
+                                    <button class="example-badge w-100" data-label="fake" data-text="പെട്രോളിന്റെയും ഡീസലിന്റെയും ജിഎസ്ടി നിരക്കുകൾ പകുതിയായി കുറയ്ക്കാൻ കേന്ദ്ര ധനകാര്യ മന്ത്രാലയം ഉത്തരവിറക്കി.">
+                                        <i class="bi bi-fuel-pump me-2 text-danger"></i> GST petrol price half cut claim (Fake)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Results & Verification -->
+                        <div class="col-lg-6">
+                            <h4 class="fw-bold mb-4 text-white">Verification Reports</h4>
+                            
+                            <!-- Awaiting Input Placeholder State -->
+                            <div id="results-placeholder" class="glass-card text-center py-5 fade-in">
+                                <div class="text-muted mb-3">
+                                    <i class="bi bi-shield-lock fs-1 text-secondary opacity-50"></i>
+                                </div>
+                                <h5 class="text-white-50 fw-semibold">Ready for Verification</h5>
+                                <p class="text-secondary small px-4 mb-0">Enter Malayalam news text on the left and click Verify. The Google MuRIL transformer model and the web fact-check retrieval engine will analyze it in real time.</p>
+                            </div>
+
+                            <!-- Loading Skeleton State -->
+                            <div id="results-loading" class="glass-card d-none">
+                                <h6 class="text-uppercase fw-bold text-muted mb-4">Verification in Progress...</h6>
+                                <div class="skeleton-bar w-75"></div>
+                                <div class="skeleton-bar w-50"></div>
+                                <div class="skeleton-bar w-100" style="height: 40px; border-radius: 12px; margin-top: 1.5rem;"></div>
+                                <div class="skeleton-bar w-100" style="height: 100px; border-radius: 12px; margin-top: 1.5rem;"></div>
+                            </div>
+
+                            <!-- Actual Results Container -->
+                            <div id="result-section" class="d-none">
+                                
+                                <!-- Classifier Output -->
+                                <div class="glass-card mb-4 text-center py-4 fade-in">
+                                    <h6 class="text-uppercase fw-semibold text-secondary mb-3">NLP Classification</h6>
+                                    <div id="prediction-badge" class="result-badge mb-4">
+                                        <!-- Will show LIKELY REAL / LIKELY FAKE -->
+                                    </div>
+                                    
+                                    <div class="px-3">
+                                        <div class="d-flex justify-content-between text-secondary small fw-semibold mb-2">
+                                            <span>Classifier Confidence</span>
+                                            <span id="confidence-text">0%</span>
+                                        </div>
+                                        <div class="progress custom-progress">
+                                            <div id="confidence-bar" class="progress-bar progress-bar-striped progress-bar-animated custom-progress-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RAG Validation Report -->
+                                <div class="glass-card fade-in" style="animation-delay: 0.15s;">
+                                    <h6 class="text-uppercase fw-semibold text-secondary mb-3">Live Search Corroboration</h6>
+                                    
+                                    <!-- AI reasoning card -->
+                                    <div class="reasoning-card mb-4" id="reasoning-box">
+                                        <!-- Filled via JS -->
+                                    </div>
+
+                                    <h6 class="fw-bold text-white small mb-3">Retrieved Evidence Web Links:</h6>
+                                    <div id="evidence-list" class="list-group list-group-flush">
+                                        <!-- Evidence elements will append here -->
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="footer-text mb-0">Google MuRIL NLP Pipeline &bull; Live Retrieval-Augmented Generation &bull; Offline Robust</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Script -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

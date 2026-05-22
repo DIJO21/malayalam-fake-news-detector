@@ -1,0 +1,31 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment Variables / Credentials
+.env
+.env.local
+.env.*
+
+# Python caching and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Large Model weights and checkpoints (exceeds GitHub 100MB limit)
+saved_models/
+results/*.png
+
+# Local Test Files and logs
+test_response*.json
+*.log
+scratch/
+
+# IDE / OS specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

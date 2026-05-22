@@ -1,0 +1,17 @@
+tensorflow>=2.15.0
+torch>=2.2.0
+transformers>=4.37.0
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+flask>=3.0.0
+nltk>=3.8.1
+matplotlib>=3.8.0
+seaborn>=0.13.0
+Flask-Cors>=4.0.0
+beautifulsoup4>=4.12.0
+python-dotenv>=1.0.0
+sentence-transformers>=2.5.0
+faiss-cpu>=1.7.4
+openai>=1.12.0
+indic-nlp-library>=0.92
