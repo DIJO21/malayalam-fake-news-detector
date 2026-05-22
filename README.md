@@ -1,3 +1,6 @@
+# malayalam-fake-news-detector
+AI-powered Malayalam Fake News Detection System using advanced NLP, Transformers, and machine learning. Includes preprocessing scripts, model training, dataset handling, and real-time fake news classification for Malayalam text and URLs
+
 # Malayalam Fake News Detection System with Live RAG Fact-Checking
 
 This project implements a state-of-the-art **Malayalam Fake News Detection System** utilizing a fine-tuned Google **MuRIL** (Multilingual Representations for Indian Languages) Transformer model, integrated with a **Retrieval-Augmented Generation (RAG)** fact-checking validation pipeline. 
